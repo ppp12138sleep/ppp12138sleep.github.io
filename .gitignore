@@ -3,7 +3,7 @@ dist/
 .astro/
 
 # 本地构建缓存
-.npm-cache/
+.npm-cache*/
 .edge-*/
 *.log
 

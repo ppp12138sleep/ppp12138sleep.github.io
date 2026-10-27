@@ -27,7 +27,7 @@ npm run build        # 产物 dist/，同时做内容校验
 npm run preview      # 预览构建结果
 ```
 
-- Node ≥ 18（开发机是 24.18.0）
+- Node ≥ 22.12（Astro 6 硬性要求；开发机是 24.18.0）。CI 里必须显式 `setup-node@22`，默认的 Node 20 会构建失败
 - **没有测试套件**，`npm run build` 就是唯一的自动化门禁
 - 没有 lint / prettier 配置，风格靠本文件约束
 
