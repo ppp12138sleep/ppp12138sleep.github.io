@@ -1,0 +1,82 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Hero from "../components/Hero.astro";
+import SectionHead from "../components/SectionHead.astro";
+import FlagshipCard from "../components/FlagshipCard.astro";
+import ProjectCard from "../components/ProjectCard.astro";
+import Skills from "../components/Skills.astro";
+import Timeline from "../components/Timeline.astro";
+import About from "../components/About.astro";
+import Contact from "../components/Contact.astro";
+
+const projects = (await getCollection("projects")).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+
+const flagship =
+  projects.find((p) => p.data.featured) ?? projects[0];
+const rest = projects.filter((p) => p.id !== flagship?.id);
+---
+
+<BaseLayout>
+  <Hero />
+
+  <section class="section" id="work">
+    <div class="container">
+      <SectionHead
+        index="01"
+        en="SELECTED WORK"
+        title="项目：从画板子到上云端"
+        desc="每个项目都按「硬件设计 / 系统联调 / 难点 / 实测数据」写，不是一句「使用 XX 完成了 YY」。"
+        link="https://github.com/"
+        linkLabel="GitHub 全部项目 ↗"
+      />
+
+      {flagship && <FlagshipCard project={flagship} />}
+
+      {
+        rest.length > 0 && (
+          <div class="project-grid">
+            {rest.map((project) => (
+              <ProjectCard project={project} />
+            ))}
+          </div>
+        )
+      }
+    </div>
+  </section>
+
+  <section class="section" id="skills">
+    <div class="container">
+      <SectionHead
+        index="02"
+        en="STACK"
+        title="技能地图"
+        desc="按「硬件 → 平台 → 通信 → 云」的顺序排，因为这是我实际做项目的顺序。"
+      />
+      <Skills />
+    </div>
+  </section>
+
+  <section class="section" id="timeline">
+    <div class="container">
+      <SectionHead
+        index="03"
+        en="BACKGROUND"
+        title="经历与奖项"
+        desc="竞赛、项目、课程，按时间倒序。"
+      />
+      <Timeline />
+    </div>
+  </section>
+
+  <section class="section" id="about">
+    <div class="container">
+      <SectionHead index="04" en="ABOUT" title="关于我" />
+      <About />
+    </div>
+  </section>
+
+  <Contact />
+</BaseLayout>

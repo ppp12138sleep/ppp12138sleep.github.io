@@ -1,0 +1,44 @@
+---
+import { site } from "../data/site.js";
+---
+
+<div class="terminal" data-terminal aria-hidden="true">
+  <div class="terminal__bar">
+    <i></i><i></i><i></i>
+    <span class="terminal__title">~/profile — zsh</span>
+  </div>
+  <div class="terminal__body">
+    <div class="tline" data-type>
+      <span class="prompt">$ </span><span class="cmd" data-type-text>whoami</span>
+    </div>
+    <div class="tline out" data-out>
+      <span class="v">潘赫 · 物联网工程 2028 届</span>
+    </div>
+
+    <div class="tline" data-type>
+      <span class="prompt">$ </span><span class="cmd" data-type-text>cat focus.txt</span>
+    </div>
+    <div class="tline out" data-out>
+      <span class="v">嵌入式硬件 / 物联网方案</span>
+    </div>
+
+    <div class="tline" data-type>
+      <span class="prompt">$ </span><span class="cmd" data-type-text>ls projects/</span>
+    </div>
+    <div class="tline out" data-out>
+      <span class="k">env-node</span> <span class="k">line-car</span>
+      <span class="k">door-sensor</span> <span class="out">--wip</span>
+    </div>
+
+    <div class="tline" data-type>
+      <span class="prompt">$ </span><span class="cmd" data-type-text>./status --now</span>
+    </div>
+    <div class="tline out" data-out>
+      <span class="green">●</span> 找 2027 寒假实习 · 简历随时可发
+    </div>
+
+    <div class="tline">
+      <span class="prompt">$ </span><span class="caret"></span>
+    </div>
+  </div>
+</div>

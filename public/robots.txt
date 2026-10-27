@@ -1,0 +1,3 @@
+﻿User-agent: *
+Allow: /
+Sitemap: https://ppp12138sleep.github.io/sitemap.xml

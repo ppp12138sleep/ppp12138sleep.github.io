@@ -1,0 +1,35 @@
+---
+import { skillGroups } from "../data/skills.js";
+---
+
+<div class="skills">
+  {
+    skillGroups.map((group) => (
+      <div class="skill-group reveal">
+        <div class="skill-group__head">
+          <h3 class="skill-group__title">{group.title}</h3>
+          <span class="skill-group__idx">{group.index}</span>
+        </div>
+
+        {group.skills.map((s) => (
+          <div class="skill-row">
+            <span class="skill-row__name">{s.name}</span>
+            <span
+              class:list={[
+                "level",
+                s.level === "strong" ? "level--strong" : "level--used",
+              ]}
+            >
+              {s.level === "strong" ? "熟练" : "用过"}
+            </span>
+            <span class="skill-row__note">{s.note}</span>
+          </div>
+        ))}
+      </div>
+    ))
+  }
+</div>
+
+<p class="skills-note mono">
+  「熟练」= 能独立做完并排错；「用过」= 做过完整功能，但不敢说精通。
+</p>

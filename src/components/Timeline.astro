@@ -1,0 +1,23 @@
+---
+import { timeline } from "../data/timeline.js";
+---
+
+<div class="timeline">
+  {
+    timeline.map((item) => (
+      <div class:list={["tl-item reveal", item.now && "tl-item--now"]}>
+        <span class="tl-date">{item.date}</span>
+        <h3 class="tl-title">{item.title}</h3>
+        <p class="tl-role">{item.role}</p>
+        <p class="tl-desc">{item.desc}</p>
+        {item.tags && item.tags.length > 0 && (
+          <div class="tl-tags">
+            {item.tags.map((t) => (
+              <span class="chip">{t}</span>
+            ))}
+          </div>
+        )}
+      </div>
+    ))
+  }
+</div>

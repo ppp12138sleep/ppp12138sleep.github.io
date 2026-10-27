@@ -1,0 +1,29 @@
+---
+import { site } from "../data/site.js";
+---
+
+<div class="about">
+  <div class="about__text reveal">
+    <p>
+      我是<strong>{site.name}</strong>，{site.school}
+      大三在读。比起在 PPT 上讲方案，我更喜欢把板子焊出来、把数据跑出来——因为只有调不通的时候，才会真正搞懂时序、电源和协议。
+    </p>
+    <p>
+      目前主攻<strong>嵌入式硬件</strong>和<strong>物联网方案</strong>两条线：硬件上能独立完成原理图、PCB
+      与焊接调试；系统上能把传感器数据通过 MQTT 送到云端，再用网页或小程序呈现出来。
+    </p>
+    <p>
+      现在在找 <strong>{site.jobSearch}</strong>，方向是嵌入式软硬件或物联网应用开发。如果你觉得我还算靠谱，欢迎随时联系——项目我都能现场演示。
+    </p>
+  </div>
+
+  <ul class="facts reveal">
+    <li><span class="k">学校</span><span class="v">{site.school}</span></li>
+    <li><span class="k">年级</span><span class="v">大三 · 2028 届</span></li>
+    <li><span class="k">方向</span><span class="v">嵌入式硬件 / IoT 方案</span></li>
+    <li><span class="k">求职</span><span class="v">{site.jobSearch}</span></li>
+    <li><span class="k">板卡</span><span class="v">STM32 · ESP32</span></li>
+    <li><span class="k">在做</span><span class="v">低功耗门磁（第二版）</span></li>
+    <li><span class="k">地点</span><span class="v">{site.location}</span></li>
+  </ul>
+</div>

@@ -1,0 +1,18 @@
+---
+const { index, en, title, desc, link, linkLabel } = Astro.props;
+---
+
+<div class="sec-head reveal">
+  <div>
+    <span class="eyebrow"><b>{index}</b> / {en}</span>
+    <h2 class="sec-title">{title}</h2>
+    {desc && <p class="sec-desc">{desc}</p>}
+  </div>
+  {
+    link && (
+      <a class="sec-link mono" href={link}>
+        {linkLabel || "全部 →"}
+      </a>
+    )
+  }
+</div>

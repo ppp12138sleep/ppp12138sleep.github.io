@@ -1,0 +1,39 @@
+---
+const { project } = Astro.props;
+const { title, summary, period, tags, cover, coverAlt, status } = project.data;
+const isWip = status === "wip";
+---
+
+<a class="card project-card reveal" href={`/projects/${project.id}/`}>
+  <div class="media media--16x10">
+    <img
+      src={cover}
+      alt={coverAlt}
+      loading="lazy"
+      decoding="async"
+      width="1600"
+      height="1000"
+    />
+    {isWip && <span class="media__tag">开发中</span>}
+  </div>
+
+  <div class="project-card__body">
+    <div class="project-card__top">
+      <span>{period}</span>
+      {
+        isWip ? (
+          <span class="status status--wip">进行中</span>
+        ) : (
+          <span class="status status--done">已完成</span>
+        )
+      }
+    </div>
+
+    <h3 class="project-card__title">{title}</h3>
+    <p class="project-card__desc">{summary}</p>
+
+    <div class="chips">
+      {tags.map((t) => <span class="chip">{t}</span>)}
+    </div>
+  </div>
+</a>

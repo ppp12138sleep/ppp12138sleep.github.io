@@ -1,0 +1,61 @@
+---
+import { site } from "../data/site.js";
+
+const cards = [
+  {
+    small: "CODE",
+    label: "GitHub",
+    value: site.githubHandle,
+    url: site.github,
+    arrow: "↗",
+  },
+  {
+    small: "MAIL",
+    label: "发邮件",
+    value: site.email,
+    url: `mailto:${site.email}`,
+    arrow: "↗",
+  },
+  {
+    small: "RESUME",
+    label: "简历 PDF",
+    value: site.resumeName,
+    url: site.resume,
+    arrow: "↓",
+  },
+];
+---
+
+<section class="contact" id="contact">
+  <div class="container contact__inner">
+    <span class="eyebrow"><b>05</b> / CONTACT</span>
+    <h2 class="sec-title">聊聊？项目我都能现场演示</h2>
+    <p class="contact__lead">
+      三个入口直通：代码、邮件、简历。看到合适的岗位，直接找我。
+    </p>
+
+    <div class="links">
+      {
+        cards.map((c) => (
+          <a
+            class="link-card"
+            href={c.url}
+            target={c.url.startsWith("http") ? "_blank" : undefined}
+            rel={c.url.startsWith("http") ? "noopener" : undefined}
+          >
+            <span class="link-card__top">
+              <small>{c.small}</small>
+              <span class="arrow" aria-hidden="true">
+                {c.arrow}
+              </span>
+            </span>
+            <span class="link-card__main">
+              <span class="link-card__label">{c.label}</span>
+              <span class="link-card__value">{c.value}</span>
+            </span>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</section>

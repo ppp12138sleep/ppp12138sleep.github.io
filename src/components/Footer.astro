@@ -1,0 +1,17 @@
+---
+import { site } from "../data/site.js";
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container site-footer__inner">
+    <span>© {year} {site.name} · 手写代码，未用模板</span>
+    <span>
+      <a href={`mailto:${site.email}`}>{site.email}</a>
+      <span aria-hidden="true"> · </span>
+      <a href="/sitemap.xml">sitemap</a>
+      <span aria-hidden="true"> · </span>
+      <span>Built with Astro</span>
+    </span>
+  </div>
+</footer>

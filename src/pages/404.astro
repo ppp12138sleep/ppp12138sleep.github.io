@@ -1,0 +1,17 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="404 · 页面不存在"
+  description="这个页面不存在，或者已经被我删掉了。"
+>
+  <section class="err container">
+    <div>
+      <div class="err__code">4<span>0</span>4</div>
+      <p class="mono">$ curl /this-page → 404 Not Found</p>
+      <p>地址可能拼错了，或者这个页面已经被删掉。</p>
+      <a class="btn btn--primary" href="/">回到首页 <span aria-hidden="true">→</span></a>
+    </div>
+  </section>
+</BaseLayout>

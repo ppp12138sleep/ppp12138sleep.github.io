@@ -1,0 +1,52 @@
+---
+const { project } = Astro.props;
+const { title, summary, role, period, tags, cover, coverAlt, stats } = project.data;
+---
+
+<a class="card flagship reveal" href={`/projects/${project.id}/`}>
+  <div class="flagship__media">
+    <img
+      src={cover}
+      alt={coverAlt}
+      loading="lazy"
+      decoding="async"
+      width="1600"
+      height="1000"
+    />
+  </div>
+
+  <div class="flagship__body">
+    <span class="flagship__badge">★ 旗舰项目</span>
+
+    <h3 class="flagship__title">{title}</h3>
+    <p class="flagship__desc">{summary}</p>
+
+    {
+      stats.length > 0 && (
+        <div class="stats">
+          {stats.map((s) => (
+            <div class="stat">
+              <span class="stat__v">
+                {s.value}
+                {s.unit && <small>{s.unit}</small>}
+              </span>
+              <span class="stat__k">{s.label}</span>
+            </div>
+          ))}
+        </div>
+      )
+    }
+
+    <div class="chips">
+      {tags.map((t) => <span class="chip">{t}</span>)}
+    </div>
+
+    <div class="flagship__foot">
+      <span class="flagship__meta">
+        <span class="flagship__role">{role}</span>
+        <span class="flagship__period">{period}</span>
+      </span>
+      <span class="go">查看详情 →</span>
+    </div>
+  </div>
+</a>

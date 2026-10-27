@@ -1,0 +1,51 @@
+---
+import { site } from "../data/site.js";
+import Terminal from "./Terminal.astro";
+---
+
+<section class="hero">
+  <div class="hud-rings" aria-hidden="true">
+    <span></span>
+    <span></span>
+    <span></span>
+    <i></i>
+    <b></b>
+  </div>
+
+  <div class="container hero__inner">
+    <div class="hero__copy">
+      <span class="hero__badge">
+        <span class="dot" aria-hidden="true"></span>
+        {site.status}
+      </span>
+
+      <h1>
+        <span class="h1-name">{site.name}</span>
+        <span class="h1-role">
+          {site.headline} · <em>{site.headlineAccent}</em>
+        </span>
+      </h1>
+
+      <p class="hero__tagline">{site.tagline}</p>
+
+      <div class="hero__actions">
+        <a class="btn btn--primary" href="#work">
+          查看项目
+          <span aria-hidden="true">→</span>
+        </a>
+        <a class="btn btn--ghost" href={site.resume} download>
+          下载简历
+          <span aria-hidden="true">↓</span>
+        </a>
+      </div>
+
+      <div class="hero__meta">
+        <span><b>学校</b> {site.school}</span>
+        <span><b>求职</b> {site.jobSearch}</span>
+        <span><b>方向</b> 硬件 / 方案</span>
+      </div>
+    </div>
+
+    <Terminal />
+  </div>
+</section>
