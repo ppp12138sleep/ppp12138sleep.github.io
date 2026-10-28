@@ -56,6 +56,75 @@ import { site } from "../data/site.js";
         </svg>
       </a>
       <a class="nav-cta" href={site.resume} download>简历 ↓</a>
+
+      <button
+        class="nav-toggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        aria-label="打开导航菜单"
+        data-nav-toggle
+      >
+        <span></span>
+        <span></span>
+      </button>
     </nav>
   </div>
 </header>
+
+<!--
+  抽屉面板必须放在 <header> 外面：
+  header 上有 backdrop-filter，会给 position:fixed 的后代重新建立包含块，
+  面板就会变成"相对 header 定位"，宽度和位置都不受控。
+-->
+<div class="mobile-menu" id="mobile-menu" data-mobile-menu>
+  <nav class="mobile-menu__list" aria-label="移动端导航">
+    {
+      site.sections.map((s, i) => (
+        <a href={`/#${s.id}`}>
+          <span class="mono">{String(i + 1).padStart(2, "0")}</span>
+          <span class="mobile-menu__label">{s.label}</span>
+          <span class="mobile-menu__arrow" aria-hidden="true">↓</span>
+        </a>
+      ))
+    }
+  </nav>
+  <div class="mobile-menu__foot">
+    <a href={site.github} target="_blank" rel="noopener">GitHub</a>
+    <a href={site.resume} download>下载简历</a>
+  </div>
+</div>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>("[data-nav-toggle]");
+  const menu = document.querySelector<HTMLElement>("[data-mobile-menu]");
+
+  if (toggle && menu) {
+    const setOpen = (open: boolean) => {
+      toggle.setAttribute("aria-expanded", String(open));
+      toggle.setAttribute("aria-label", open ? "关闭导航菜单" : "打开导航菜单");
+      menu.classList.toggle("is-open", open);
+      document.documentElement.classList.toggle("menu-open", open);
+    };
+
+    toggle.addEventListener("click", () => {
+      setOpen(toggle.getAttribute("aria-expanded") !== "true");
+    });
+
+    // 点任意链接后收起（锚点跳转时菜单不该挡着内容）
+    menu.querySelectorAll("a").forEach((a) => {
+      a.addEventListener("click", () => setOpen(false));
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") setOpen(false);
+    });
+
+    // 拉宽到桌面尺寸时收起，避免残留在页面上
+    window
+      .matchMedia("(min-width: 761px)")
+      .addEventListener("change", (e) => {
+        if (e.matches) setOpen(false);
+      });
+  }
+</script>

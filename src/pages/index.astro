@@ -9,6 +9,7 @@ import Skills from "../components/Skills.astro";
 import Timeline from "../components/Timeline.astro";
 import About from "../components/About.astro";
 import Contact from "../components/Contact.astro";
+import SectionRail from "../components/SectionRail.astro";
 
 const projects = (await getCollection("projects")).sort(
   (a, b) => a.data.order - b.data.order,
@@ -20,6 +21,7 @@ const rest = projects.filter((p) => p.id !== flagship?.id);
 ---
 
 <BaseLayout>
+  <SectionRail />
   <Hero />
 
   <section class="section" id="work">

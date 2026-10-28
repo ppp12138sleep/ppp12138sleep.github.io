@@ -1,0 +1,92 @@
+---
+import { site } from "../data/site.js";
+
+/**
+ * 桌面端右侧的位置指示器：
+ * 一条细轨 + 一个随滚动移动的光点，告诉你现在看到页面的哪一部分。
+ */
+---
+
+<nav class="section-rail" aria-label="页面位置" data-rail>
+  <span class="section-rail__track" aria-hidden="true"></span>
+  <span class="section-rail__fill" aria-hidden="true" data-rail-fill></span>
+  <span class="section-rail__dot" aria-hidden="true" data-rail-dot></span>
+
+  {
+    site.sections.map((s, i) => (
+      <a class="section-rail__item" href={`/#${s.id}`} data-section={s.id}>
+        <span class="section-rail__label">{s.label}</span>
+        <span class="section-rail__mark" aria-hidden="true"></span>
+      </a>
+    ))
+  }
+</nav>
+
+<script>
+  const rail = document.querySelector<HTMLElement>("[data-rail]");
+  const dot = document.querySelector<HTMLElement>("[data-rail-dot]");
+  const fill = document.querySelector<HTMLElement>("[data-rail-fill]");
+
+  if (rail && dot && fill) {
+    const items = Array.from(
+      rail.querySelectorAll<HTMLAnchorElement>("[data-section]"),
+    );
+    const targets = items.map((a) =>
+      document.getElementById(a.dataset.section || ""),
+    );
+    const valid = targets.every(Boolean);
+
+    if (items.length && valid) {
+      let centers: number[] = [];
+      let raf = 0;
+
+      const measure = () => {
+        centers = items.map((el) => el.offsetTop + el.offsetHeight / 2);
+      };
+
+      const update = () => {
+        raf = 0;
+        const probe = window.scrollY + window.innerHeight * 0.32;
+
+        // 找到当前区块
+        let idx = 0;
+        for (let i = 0; i < targets.length; i++) {
+          const el = targets[i] as HTMLElement;
+          if (probe >= el.offsetTop - 90) idx = i;
+        }
+
+        // 在「当前区块 → 下一区块」之间取连续进度，让光点滑动而不是跳
+        const cur = targets[idx] as HTMLElement;
+        const next = targets[idx + 1] as HTMLElement | undefined;
+        let p = 1;
+        if (next) {
+          const span = Math.max(1, next.offsetTop - cur.offsetTop);
+          p = Math.min(1, Math.max(0, (probe - cur.offsetTop) / span));
+        }
+
+        const base = centers[0] ?? 0;
+        const from = centers[idx] - base;
+        const to = next ? centers[idx + 1] - base : from;
+        const y = from + (to - from) * p;
+
+        dot.style.transform = `translateY(${y - 4}px)`;
+        fill.style.height = `${Math.max(0, y - 12)}px`;
+
+        items.forEach((el, i) => el.classList.toggle("is-active", i === idx));
+      };
+
+      const schedule = () => {
+        if (!raf) raf = requestAnimationFrame(update);
+      };
+
+      measure();
+      update();
+
+      window.addEventListener("scroll", schedule, { passive: true });
+      window.addEventListener("resize", () => {
+        measure();
+        update();
+      });
+    }
+  }
+</script>

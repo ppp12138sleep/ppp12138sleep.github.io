@@ -1,4 +1,15 @@
-﻿/**
+/**
+ * 页面区块：导航、侧边位置指示器都从这里读，改一处两边同步
+ */
+const sections = [
+  { id: "work", label: "项目" },
+  { id: "skills", label: "技能" },
+  { id: "timeline", label: "经历" },
+  { id: "about", label: "关于" },
+  { id: "contact", label: "联系" },
+];
+
+/**
  * 站点全局信息 —— 改这里就能改全站的名字、定位、联系方式
  * 注意：当前是示例内容（placeholder: true），上线前替换成真实信息。
  */
@@ -29,12 +40,8 @@ export const site = {
   resume: "/resume-preview.pdf", // 占位：替换成你的简历 PDF
   resumeName: "潘赫-嵌入式硬件-2028届.pdf",
 
-  nav: [
-    { href: "/#work", label: "项目" },
-    { href: "/#skills", label: "技能" },
-    { href: "/#timeline", label: "经历" },
-    { href: "/#contact", label: "联系" },
-  ],
+  sections,
+  nav: sections.map((s) => ({ href: `/#${s.id}`, label: s.label })),
 
   // 用于 JSON-LD 的 sameAs，填完整网址
   links: [{ label: "GitHub", url: "https://github.com/ppp12138sleep" }],
