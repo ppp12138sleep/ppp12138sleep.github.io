@@ -3,9 +3,20 @@ import { getCollection, getEntry, render } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { site } from "../../data/site.js";
 
-// 服务端渲染：根据 URL 里的 slug 现查内容集合
-const slug = Astro.params.slug;
-const project = slug ? await getEntry("projects", slug) : undefined;
+// 项目页内容来自 Markdown，构建时就固定了，所以两种模式都预渲染
+export const prerender = true;
+
+export async function getStaticPaths() {
+  const projects = await getCollection("projects");
+  return projects.map((project) => ({
+    params: { slug: project.id },
+    props: { project },
+  }));
+}
+
+const project =
+  Astro.props.project ??
+  (Astro.params.slug ? await getEntry("projects", Astro.params.slug) : undefined);
 
 if (!project) {
   return Astro.redirect("/404");
