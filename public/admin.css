@@ -1,0 +1,243 @@
+/* 后台专用样式：和前台同一套配色，但单独一个文件，不影响主站 */
+
+:root {
+  --bg: #070c14;
+  --surface: #0c1826;
+  --surface-2: #12202f;
+  --line: rgba(96, 176, 255, 0.18);
+  --ink: #e8f1fa;
+  --ink-2: #a3b6cb;
+  --ink-3: #7c90a6;
+  --cyan: #4fd8ff;
+  --font-sans: "HarmonyOS Sans SC", "PingFang SC", "Microsoft YaHei",
+    system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", Consolas, "Microsoft YaHei", monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.admin-body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: var(--bg);
+  background-image: radial-gradient(
+    900px 420px at 80% -10%,
+    rgba(31, 143, 255, 0.16),
+    transparent 62%
+  );
+  color: var(--ink);
+  font-family: var(--font-sans);
+  line-height: 1.7;
+}
+
+.admin-kicker {
+  display: block;
+  margin-bottom: 8px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  color: var(--cyan);
+}
+
+h1 {
+  margin: 0 0 6px;
+  font-size: 26px;
+  letter-spacing: -0.02em;
+}
+
+h2 {
+  margin: 0 0 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--line);
+  font-size: 15px;
+  color: var(--ink);
+}
+
+.admin-muted {
+  margin: 0 0 18px;
+  color: var(--ink-3);
+  font-size: 13.5px;
+}
+
+.admin-muted code {
+  padding: 1px 5px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--cyan);
+}
+
+/* 登录页 */
+.admin-login {
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  padding: 24px;
+}
+
+.admin-login__card {
+  width: min(420px, 100%);
+  padding: 32px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--surface);
+  box-shadow: 0 40px 80px -40px rgba(0, 0, 0, 0.9);
+}
+
+.admin-link {
+  display: inline-block;
+  margin-top: 18px;
+  color: var(--ink-3);
+  font-size: 13px;
+  text-decoration: none;
+}
+
+.admin-link:hover {
+  color: var(--cyan);
+}
+
+/* 主面板 */
+.admin-wrap {
+  width: min(820px, 100%);
+  margin-inline: auto;
+  padding: 40px 24px 80px;
+}
+
+.admin-head {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-bottom: 26px;
+}
+
+.admin-head__actions {
+  display: flex;
+  gap: 10px;
+}
+
+.admin-section {
+  margin-bottom: 18px;
+  padding: 22px 24px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+}
+
+.admin-field {
+  display: block;
+  margin-bottom: 14px;
+}
+
+.admin-field > span {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 13px;
+  color: var(--ink-2);
+}
+
+.admin-hint {
+  display: block;
+  margin-top: 5px;
+  font-size: 11.5px;
+  font-style: normal;
+  color: var(--ink-3);
+}
+
+.admin-field input[type="text"],
+.admin-field input[type="email"],
+.admin-field input[type="url"],
+.admin-field textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 14px;
+  transition: border-color 0.2s;
+}
+
+.admin-field input:focus,
+.admin-field textarea:focus {
+  border-color: var(--cyan);
+  outline: none;
+}
+
+.admin-check {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  font-size: 13.5px;
+  color: var(--ink-2);
+}
+
+.admin-avatar-row {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+}
+
+.admin-avatar {
+  width: 84px;
+  height: 84px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.admin-btn {
+  padding: 10px 20px;
+  border: 1px solid transparent;
+  border-radius: 7px;
+  background: linear-gradient(135deg, #6ee6ff, #2f9dff);
+  color: #04121c;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.admin-btn:hover {
+  filter: brightness(1.08);
+}
+
+.admin-btn--ghost {
+  background: transparent;
+  border-color: var(--line);
+  color: var(--ink-2);
+  font-weight: 400;
+}
+
+.admin-btn--ghost:hover {
+  border-color: var(--cyan);
+  color: var(--cyan);
+}
+
+.admin-save {
+  position: sticky;
+  bottom: 16px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.admin-ok {
+  margin-bottom: 18px;
+  padding: 10px 14px;
+  border: 1px solid rgba(53, 214, 164, 0.4);
+  border-radius: 8px;
+  background: rgba(53, 214, 164, 0.1);
+  color: #6ff0c2;
+  font-size: 14px;
+}
+
+.admin-error {
+  margin: 0 0 14px;
+  color: #ff8f7a;
+  font-size: 13.5px;
+}

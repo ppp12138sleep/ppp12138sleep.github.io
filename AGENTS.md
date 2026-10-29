@@ -4,8 +4,14 @@
 
 ## 0. 项目是什么
 
-一个人的求职作品集网站：Astro 6 静态生成，全站深色 HUD 风格，中文内容。
-只有 1 个运行时依赖（`astro`），没有数据库、没有后端、没有客户端框架。
+一个人的求职作品集网站：Astro 6 服务端渲染（SSR），全站深色 HUD 风格，中文内容。
+**带一个网页后台**：登录 `/admin` 可以改个人信息，不用改代码。
+
+数据流：`data/site.json`（唯一的"数据库"）← `src/lib/store.js` ← 组件读取；
+后台表单经 `/api/save` 写回 JSON，刷新页面即生效。
+
+> 因为是 SSR，**GitHub Pages 已经不能用了**（只能托管静态文件）。
+> 部署走 Render 等能跑 Node 的平台，配置见 `render.yaml`。
 
 阅读顺序：
 
@@ -156,3 +162,23 @@ npm run preview      # 预览构建结果
 5. 上线：初始化 git → 推 GitHub → 配 Pages；同步改 `site.js` 的 `url` 与 `public/robots.txt`
 
 > 不要主动做上面没被要求的事；尤其不要为了"更完善"而新增页面或功能，这个项目的克制是刻意设计的。
+
+---
+
+## 10. 后台相关（v2.0 新增）
+
+| 想改什么 | 去哪里 |
+| --- | --- |
+| 后台界面的字段与布局 | `src/pages/admin/index.astro` |
+| 登录页 | `src/pages/admin/login.astro` |
+| 保存接口（含头像上传） | `src/pages/api/save.js` |
+| 登录态与密码校验 | `src/lib/auth.js` |
+| 拦截未登录访问 | `src/middleware.js` |
+| 站点数据读写 | `src/lib/store.js` + `data/site.json` |
+
+**红线**
+
+- 不要把 `ADMIN_PASSWORD` 写进代码或提交 `.env`（`.gitignore` 已忽略）
+- `data/site.json` 是内容数据库，**要提交**；`data/uploads/` 是运行时产物，**不提交**
+- 改动字段后，`store.js` 的 `DEFAULTS` 与后台表单要同步，否则老数据缺字段会渲染成空
+- Astro 默认开启 CSRF 校验：POST 请求必须带同源 `Origin`，用 curl 调试时要手动加

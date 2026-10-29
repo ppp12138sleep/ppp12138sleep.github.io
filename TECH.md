@@ -5,12 +5,26 @@
 
 | 项 | 值 |
 | --- | --- |
-| 版本 | v1.0（2026-10-27） |
-| 框架 | Astro 6.4.8（SSG） |
+| 版本 | v2.0（2026-10-29，加入后台与 SSR） |
+| 框架 | Astro 6.4.8（**SSR**，`@astrojs/node` standalone） |
 | Node | 24.18.0（**最低 22.12**，Astro 6 硬性要求） |
-| 依赖数量 | 1 个直接依赖：`astro` |
-| 源码 | 24 个文件，~2140 行 CSS |
-| 构建产物 | 18 个文件，~360 KB |
+| 依赖数量 | 2 个：`astro`、`@astrojs/node` |
+| 源码 | 28 个文件，~2430 行 CSS |
+
+## v2.0 架构变更（重要）
+
+站点从「构建时静态生成」改为「请求时服务端渲染」，新增**网页后台**：
+
+| 变化 | 说明 |
+| --- | --- |
+| `output: "server"` + `@astrojs/node` | 页面在请求时渲染，改内容刷新即生效，不需要重新构建 |
+| `data/site.json` | 站点信息从代码里搬到了 JSON，这是当前唯一的「数据库」 |
+| `src/lib/store.js` | 读写 site.json，并在内存里维护同一个 `site` 对象供所有组件读取 |
+| `/admin` | 密码登录后编辑姓名、定位句、联系方式、SEO、头像 |
+| `src/middleware.js` | 未登录访问 `/admin`、`/api/save`、`/api/upload` 一律跳登录页 |
+| `/uploads/<file>` | 运行时上传的头像存 `data/uploads/`，由接口读取返回 |
+
+**副作用：GitHub Pages 不能用了**（它只能托管静态文件）。部署改到能跑 Node 的平台，见 `render.yaml`。
 
 ---
 

@@ -1,0 +1,131 @@
+---
+import { site } from "../../data/site.js";
+
+// 保存后带 ?saved=1 回来，给个提示
+const saved = Astro.url.searchParams.get("saved") === "1";
+
+const fields = [
+  { name: "name", label: "名字", value: site.name, hint: "首屏大字" },
+  { name: "nameEn", label: "英文名", value: site.nameEn },
+  {
+    name: "headline",
+    label: "定位句（前半）",
+    value: site.headline,
+    hint: "如：物联网工程 2028 届",
+  },
+  {
+    name: "headlineAccent",
+    label: "定位句（高亮部分）",
+    value: site.headlineAccent,
+    hint: "会显示成青色",
+  },
+  { name: "status", label: "首屏状态徽章", value: site.status },
+  { name: "jobSearch", label: "求职意向", value: site.jobSearch },
+];
+
+const contactFields = [
+  { name: "school", label: "学校 · 专业", value: site.school },
+  { name: "location", label: "所在城市", value: site.location },
+  { name: "email", label: "邮箱", value: site.email, type: "email" },
+  { name: "github", label: "GitHub 主页", value: site.github, type: "url" },
+  { name: "githubHandle", label: "GitHub 用户名", value: site.githubHandle },
+  { name: "resumeName", label: "简历文件名", value: site.resumeName },
+];
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>后台 · 修改个人信息</title>
+    <link rel="stylesheet" href="/admin.css" />
+  </head>
+  <body class="admin-body">
+    <main class="admin-wrap">
+      <header class="admin-head">
+        <div>
+          <span class="admin-kicker">ADMIN</span>
+          <h1>修改个人信息</h1>
+          <p class="admin-muted">
+            保存后立刻生效，所有页面刷新即可看到；改动会写进
+            <code>data/site.json</code>。
+          </p>
+        </div>
+        <div class="admin-head__actions">
+          <a class="admin-btn admin-btn--ghost" href="/" target="_blank">查看网站 ↗</a>
+          <form method="POST" action="/api/logout">
+            <button class="admin-btn admin-btn--ghost" type="submit">退出</button>
+          </form>
+        </div>
+      </header>
+
+      {saved && <p class="admin-ok">已保存 ✅</p>}
+
+      <form method="POST" action="/api/save" class="admin-form">
+        <section class="admin-section">
+          <h2>头像</h2>
+          <p class="admin-muted">
+            上传一张正方形照片，会自动裁成圆形显示在首屏。
+          </p>
+          <div class="admin-avatar-row">
+            {site.avatar && (
+              <img class="admin-avatar" src={site.avatar} alt="当前头像" />
+            )}
+            <input type="file" name="avatar" accept="image/png,image/jpeg,image/webp" />
+          </div>
+        </section>
+
+        <section class="admin-section">
+          <h2>首屏</h2>
+          {
+            fields.map((f) => (
+              <label class="admin-field">
+                <span>{f.label}</span>
+                <input type="text" name={f.name} value={f.value} />
+                {f.hint && <em class="admin-hint">{f.hint}</em>}
+              </label>
+            ))
+          }
+          <label class="admin-field">
+            <span>一句话介绍</span>
+            <textarea name="tagline" rows="3">{site.tagline}</textarea>
+          </label>
+        </section>
+
+        <section class="admin-section">
+          <h2>联系方式</h2>
+          {
+            contactFields.map((f) => (
+              <label class="admin-field">
+                <span>{f.label}</span>
+                <input type={f.type || "text"} name={f.name} value={f.value} />
+              </label>
+            ))
+          }
+        </section>
+
+        <section class="admin-section">
+          <h2>关于我</h2>
+          <label class="admin-field">
+            <span>页面标题（浏览器标签）</span>
+            <input type="text" name="seoTitle" value={site.seo.title} />
+          </label>
+          <label class="admin-field">
+            <span>页面简介（搜索结果/分享卡片）</span>
+            <textarea name="seoDescription" rows="3">{site.seo.description}</textarea>
+          </label>
+          <label class="admin-check">
+            <input type="checkbox" name="placeholder" checked={site.placeholder} />
+            <span>显示「示例内容」提示条（内容还是示例时保留）</span>
+          </label>
+        </section>
+
+        <div class="admin-save">
+          <button class="admin-btn" type="submit">保存修改</button>
+        </div>
+      </form>
+    </main>
+  </body>
+</html>

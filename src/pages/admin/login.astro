@@ -1,0 +1,60 @@
+---
+import { checkPassword, setSession } from "../../lib/auth.js";
+
+// 已登录直接进后台
+if (Astro.cookies.get("ph_admin")) {
+  return Astro.redirect("/admin");
+}
+
+let error = "";
+
+if (Astro.request.method === "POST") {
+  const form = await Astro.request.formData();
+  const input = form.get("password");
+
+  if (checkPassword(input)) {
+    setSession(Astro.cookies);
+    return Astro.redirect("/admin");
+  }
+  error = "密码不对，再试一次";
+}
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>登录 · 后台</title>
+    <link rel="stylesheet" href="/admin.css" />
+  </head>
+  <body class="admin-body">
+    <main class="admin-login">
+      <div class="admin-login__card">
+        <span class="admin-kicker">ADMIN</span>
+        <h1>后台登录</h1>
+        <p class="admin-muted">输入密码后可以修改首页上的个人信息。</p>
+
+        <form method="POST">
+          <label class="admin-field">
+            <span>密码</span>
+            <input
+              type="password"
+              name="password"
+              autocomplete="current-password"
+              autofocus
+              required
+            />
+          </label>
+
+          {error && <p class="admin-error">{error}</p>}
+
+          <button class="admin-btn" type="submit">进入后台</button>
+        </form>
+
+        <a class="admin-link" href="/">← 返回首页</a>
+      </div>
+    </main>
+  </body>
+</html>

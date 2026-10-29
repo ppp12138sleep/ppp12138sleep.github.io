@@ -1,17 +1,16 @@
 ---
-import { getCollection, render } from "astro:content";
+import { getCollection, getEntry, render } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { site } from "../../data/site.js";
 
-export async function getStaticPaths() {
-  const projects = await getCollection("projects");
-  return projects.map((project) => ({
-    params: { slug: project.id },
-    props: { project },
-  }));
+// 服务端渲染：根据 URL 里的 slug 现查内容集合
+const slug = Astro.params.slug;
+const project = slug ? await getEntry("projects", slug) : undefined;
+
+if (!project) {
+  return Astro.redirect("/404");
 }
 
-const { project } = Astro.props;
 const d = project.data;
 const { Content } = await render(project);
 

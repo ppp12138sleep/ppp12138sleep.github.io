@@ -2408,3 +2408,25 @@ html.menu-open {
   box-shadow: 0 0 10px rgba(79, 216, 255, 0.9);
   transform: scale(1.5);
 }
+
+/* 首屏头像 */
+.hero__avatar {
+  margin-bottom: 22px;
+}
+
+.hero__avatar img {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid rgba(79, 216, 255, 0.45);
+  box-shadow: 0 0 0 4px rgba(79, 216, 255, 0.06),
+    0 12px 30px -12px rgba(0, 0, 0, 0.9);
+}
+
+@media (max-width: 420px) {
+  .hero__avatar img {
+    width: 76px;
+    height: 76px;
+  }
+}

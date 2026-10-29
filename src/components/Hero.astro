@@ -14,6 +14,20 @@ import Terminal from "./Terminal.astro";
 
   <div class="container hero__inner">
     <div class="hero__copy">
+      {
+        site.avatar && (
+          <div class="hero__avatar">
+            <img
+              src={site.avatar}
+              alt={`${site.name} 的照片`}
+              width="96"
+              height="96"
+              loading="eager"
+            />
+          </div>
+        )
+      }
+
       <span class="hero__badge">
         <span class="dot" aria-hidden="true"></span>
         {site.status}

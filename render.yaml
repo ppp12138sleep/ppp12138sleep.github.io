@@ -1,0 +1,26 @@
+# Render 部署配置：https://render.com
+#
+# 用法：
+#   1. 仓库推到 GitHub
+#   2. Render → New → Blueprint → 选这个仓库
+#   3. 填 ADMIN_PASSWORD / ADMIN_SECRET / SITE_URL 三个环境变量
+#
+# 注意：免费实例重启后磁盘会重置，后台改的内容会回到 data/site.json 里的版本。
+# 解决办法：每次后台改完，把 data/site.json 提交一次 git；或者升级到带磁盘的套餐。
+
+services:
+  - type: web
+    name: personal-portfolio
+    runtime: node
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: node ./dist/server/entry.mjs
+    envVars:
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: ADMIN_SECRET
+        generateValue: true
+      - key: SITE_URL
+        sync: false
+      - key: NODE_VERSION
+        value: "22"

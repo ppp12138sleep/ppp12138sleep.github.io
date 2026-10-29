@@ -13,3 +13,8 @@ shots/
 # 系统文件
 .DS_Store
 Thumbs.db
+# 环境变量（含后台密码）
+.env
+
+# 后台运行时上传的头像
+data/uploads/
