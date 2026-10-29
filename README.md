@@ -6,6 +6,23 @@
 > **v2.0 变化**：站点从"静态生成"改成"服务端渲染 + 后台"。
 > 因为要跑 Node，**GitHub Pages 不能再用了**，部署见 `render.yaml`。
 
+## 一键部署（Render）
+
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/ppp12138sleep/ppp12138sleep.github.io)
+
+点上面的按钮（或用这个链接）：
+<https://render.com/deploy?repo=https://github.com/ppp12138sleep/ppp12138sleep.github.io>
+
+它会把仓库里的 `render.yaml` 读进去，你只需要填三个环境变量：
+
+| 变量 | 填什么 |
+| --- | --- |
+| `ADMIN_PASSWORD` | 后台登录密码，自己定 |
+| `ADMIN_SECRET` | 点 Generate 自动生成 |
+| `SITE_URL` | 先留空，拿到域名后回来补 |
+
+详细步骤和常见问题见 [DEPLOY.md](DEPLOY.md)。
+
 > **当前状态：示例内容。** 文案、数据、图片都是占位，用于确认版式。
 > 替换真实内容后，把 `src/data/site.js` 里的 `placeholder: true` 改成 `false`，右下角提示会自动消失。
 
