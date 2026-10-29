@@ -10,4 +10,8 @@ export default defineConfig({
   // 后台改完内容，刷新页面就能看到，不需要重新构建
   output: "server",
   adapter: node({ mode: "standalone" }),
+
+  // 关掉开发工具条：它只在 npm run dev 时出现，
+  // 但会挡住页面底部，演示时容易被误认为是站点的一部分
+  devToolbar: { enabled: false },
 });
