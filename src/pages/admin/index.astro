@@ -63,7 +63,12 @@ const contactFields = [
 
       {saved && <p class="admin-ok">已保存 ✅</p>}
 
-      <form method="POST" action="/api/save" class="admin-form">
+      <form
+        method="POST"
+        action="/api/save"
+        class="admin-form"
+        enctype="multipart/form-data"
+      >
         <section class="admin-section">
           <h2>头像</h2>
           <p class="admin-muted">
